@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { DocumentDto } from './dto/upload-document.dto';
+import { DocumentDto } from './dto/add-document.dto';
 import { UpdateDocumentDto } from './dto/update-document.dto';
-import { handleException } from 'src/utils/exception-handler.util';
+import { handleException } from '../../utils/exception-handler.util';
 
 @Injectable()
 export class DocumentService {
@@ -51,6 +51,12 @@ export class DocumentService {
   }
 
   async getDocument(id: string) {
-    return this.prisma.document.findUnique({ where: { id } });
+    try{
+      return this.prisma.document.findUnique({
+        where: { id }, // The `where` clause is required
+      });
+    }catch(error){
+      handleException(error)
+    }
   }
 }

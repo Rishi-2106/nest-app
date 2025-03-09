@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { DocumentService } from './document.service';
-import { DocumentDto } from './dto/upload-document.dto';
-import { handleException } from 'src/utils/exception-handler.util';
+import { DocumentDto } from './dto/add-document.dto';
+import { handleException } from '../../utils/exception-handler.util';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
@@ -16,7 +16,7 @@ export class DocumentController {
 
 
     @Post('/upload')
-    @Roles(Role.ADMIN)
+    @Roles(Role.ADMIN, Role.EDITOR)
     @UseInterceptors(FileInterceptor('file'))
     async upload(@UploadedFile() file: Express.Multer.File, @Body() documentData: DocumentDto) {
       try {
@@ -27,7 +27,7 @@ export class DocumentController {
     }
   
     @Put(':id')
-    @Roles(Role.ADMIN)
+    @Roles(Role.ADMIN, Role.EDITOR)
     @UseInterceptors(FileInterceptor('file'))
     async updateDocument(@UploadedFile() file: Express.Multer.File, @Body() documentData: UpdateDocumentDto,  @Param('id') id: string,) {
       try {
@@ -49,7 +49,7 @@ export class DocumentController {
     }
 
     @Get(':id')
-    @Roles(Role.ADMIN)
+    @Roles(Role.ADMIN, Role.EDITOR)
     async GetDocument(
       @Param('id') id: string,
     ) {
@@ -61,6 +61,7 @@ export class DocumentController {
     }
 
     @Delete(':id')
+    @Roles(Role.ADMIN, Role.EDITOR)
     async deleteDocument(@Param('id') id: string,) {
       try {
         return await this.documentService.deleteDocument(id);

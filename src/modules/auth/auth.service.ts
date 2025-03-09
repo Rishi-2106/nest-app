@@ -4,7 +4,7 @@ import * as bcrypt from 'bcryptjs';
 import { PrismaService } from '../../prisma/prisma.service';
 import { SignInDto } from './dto/sign-in.dto';
 import { UserService } from '../user/user.service';
-import { handleException } from 'src/utils/exception-handler.util';
+import { handleException } from '../../utils/exception-handler.util';
 import { SignUpDto } from './dto/sign-up.dto';
 
 @Injectable()

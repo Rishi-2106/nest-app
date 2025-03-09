@@ -23,7 +23,7 @@ export function handleException(error: any): never {
         'You do not have permission to perform this action',
     );
   }
-
+ console.log(error,'error?.response?.message')
   throw new BadRequestException(
     error?.response?.message,
   );

@@ -1,5 +1,6 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import { handleException } from 'src/utils/exception-handler.util';
+// import { handleException } from 'src/utils/exception-handler.util';
+import { handleException } from '../../utils/exception-handler.util';
 import { SignInDto } from './dto/sign-in.dto';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/sign-up.dto';

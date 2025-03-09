@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { handleException } from 'src/utils/exception-handler.util';
+import { handleException } from '../../utils/exception-handler.util';
 import { PrismaService } from '../../prisma/prisma.service';
 
 @Injectable()
