@@ -1,15 +1,15 @@
 import {
   IsString,
-  IsNotEmpty,
+  IsOptional,
 } from 'class-validator';
 
-export class DocumentDto {
+export class UpdateDocumentDto {
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   filename: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   ownerId: string;
 }
 

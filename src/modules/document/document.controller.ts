@@ -1,12 +1,13 @@
-import { Body, Controller, Param, Post, Put, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { DocumentService } from './document.service';
-import { UploadDto } from './dto/upload-document.dto';
+import { DocumentDto } from './dto/upload-document.dto';
 import { handleException } from 'src/utils/exception-handler.util';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from 'src/enums/role.enum';
+import { UpdateDocumentDto } from './dto/update-document.dto';
 
 @Controller('document')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -17,7 +18,7 @@ export class DocumentController {
     @Post('/upload')
     @Roles(Role.ADMIN)
     @UseInterceptors(FileInterceptor('file'))
-    async upload(@UploadedFile() file: Express.Multer.File, @Body() documentData: UploadDto) {
+    async upload(@UploadedFile() file: Express.Multer.File, @Body() documentData: DocumentDto) {
       try {
         return await this.documentService.saveFile(documentData,file);
       } catch (error) {
@@ -28,32 +29,44 @@ export class DocumentController {
     @Put(':id')
     @Roles(Role.ADMIN)
     @UseInterceptors(FileInterceptor('file'))
-    async updateDocument(@UploadedFile() file: Express.Multer.File, @Body() documentData: UploadDto,  @Param('id') userId: string,) {
+    async updateDocument(@UploadedFile() file: Express.Multer.File, @Body() documentData: UpdateDocumentDto,  @Param('id') id: string,) {
       try {
-        return await this.documentService.saveFile(documentData,file);
+        return await this.documentService.updateDocument(id,documentData,file);
       } catch (error) {
         handleException(error);
       }
     }
 
-    // @Get(':id')
-    // async GetDocument(
-    //     @Query("id") id :string,
-    // ) {
-    //   try {
-    //     return await this.documentService.saveFile(documentData);
-    //   } catch (error) {
-    //     handleException(error);
-    //   }
-    // }
+    @Get('/all')
+    @Roles(Role.ADMIN, Role.EDITOR, Role.VIEWER)
+    async GetAllDocument(
+    ) {
+      try {
+        return await this.documentService.getAllDocument();
+      } catch (error) {
+        handleException(error);
+      }
+    }
 
-    // @Put(':id')
-    // async registert(@Body() user: SignUpDto) {
-    //   try {
-    //     return await this.authService.SignUp(user);
-    //   } catch (error) {
-    //     handleException(error);
-    //   }
-    // }
+    @Get(':id')
+    @Roles(Role.ADMIN)
+    async GetDocument(
+      @Param('id') id: string,
+    ) {
+      try {
+        return await this.documentService.getDocument(id);
+      } catch (error) {
+        handleException(error);
+      }
+    }
+
+    @Delete(':id')
+    async deleteDocument(@Param('id') id: string,) {
+      try {
+        return await this.documentService.deleteDocument(id);
+      } catch (error) {
+        handleException(error);
+      }
+    }
 
 }

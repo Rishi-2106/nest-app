@@ -1,4 +1,4 @@
-import { Role } from "@prisma/client";
+import { Role } from "src/enums/role.enum";
 
 
 const RoleAuthorityMap: Record<Role, Role[]> = {
