@@ -29,12 +29,12 @@ describe('DocumentController', () => {
   });
 
   it('should get all documents', async () => {
-    expect(await controller.GetAllDocument()).toEqual([{ id: '1', filename: 'test.pdf' }]);
+    expect(await controller.getAllDocuments()).toEqual([{ id: '1', filename: 'test.pdf' }]);
     expect(service.getAllDocument).toHaveBeenCalled();
   });
 
   it('should get a document by ID', async () => {
-    expect(await controller.GetDocument('1')).toEqual({ id: '1', filename: 'test.pdf' });
+    expect(await controller.getDocument('1')).toEqual({ id: '1', filename: 'test.pdf' });
     expect(service.getDocument).toHaveBeenCalledWith('1');
   });
 
