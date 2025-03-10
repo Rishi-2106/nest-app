@@ -35,8 +35,11 @@ export class DocumentService {
   }
   async getAllDocument() {
     try {
-      return this.prisma.document.findMany();
+      const documents = await this.prisma.document.findMany();
+      console.log('Documents fetched:', documents); // ✅ Debugging
+      return documents;
     } catch (error) {
+      throw error
       handleException(error)
     }
   }

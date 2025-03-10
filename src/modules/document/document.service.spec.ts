@@ -9,8 +9,7 @@ describe('DocumentService', () => {
 
   const mockPrismaService = {
     document: {
-      getAllDocument: jest.fn().mockResolvedValue([{ id: 1, name: 'Test Doc' }]),
-      findMany: jest.fn().mockResolvedValue([{ id: '1', filename: 'test.pdf' }]),
+      findMany: jest.fn().mockResolvedValue([{ id: '1', filename: 'test.pdf' }]), // ✅ Matches expectations
       findUnique: jest.fn().mockImplementation(({ where }) => 
         Promise.resolve({ id: where.id, filename: 'test.pdf' }) // Fix structure
       ),

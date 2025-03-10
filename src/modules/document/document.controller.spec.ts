@@ -9,9 +9,9 @@ describe('DocumentController', () => {
   let service: DocumentService;
 
   const mockDocumentService = {
-    findAll: jest.fn(() => [{ id: '1', filename: 'test.pdf' }]),
-    findOne: jest.fn((id) => ({ id, filename: 'test.pdf' })),
-    delete: jest.fn((id) => ({ id, deleted: true })),
+    getAllDocument: jest.fn(() => [{ id: '1', filename: 'test.pdf' }]),
+    getDocument: jest.fn((id) => ({ id, filename: 'test.pdf' })),
+    deleteDocument: jest.fn((id) => ({ id, deleted: true })), 
   };
 
   beforeEach(async () => {
